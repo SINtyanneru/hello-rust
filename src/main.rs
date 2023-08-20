@@ -5,14 +5,17 @@ use std::env;
 fn main(){
 	let args: Vec<String> = env::args().collect();
 
-	let mut TEXT = "Rust is tanoshii";
-
 	if args.len() > 1 {
-		TEXT = &args[1];
+		let TEXT = &args[1..].join(" ");
+		GEN(String::from(TEXT));
+	}else{
+		GEN(String::from("Rust is tanoshii"));
 	}
+}
 
+fn GEN(TEXT: String) {
 	let stdout = stdout();
-	let message = String::from(TEXT);
+	let message = String::from(&TEXT);  // TEXTの所有権を保持したまま新しいStringを作成
 	let width = message.chars().count();
 
 	let mut writer = BufWriter::new(stdout.lock());
